@@ -11,10 +11,10 @@
           "architecture": "avr",
           "version": "0.0.1",
           "category": "Contributed",
-          "url": "https://github.com/hfrk/tetiduino/releases/download/0.0.1/tetiduino-v0.0.1.zip",
-          "archiveFileName": "tetiduino-v0.0.1.zip",
-          "checksum": "SHA-256:82b218dd7abf48021c4417ebf0ad4d8781cc4b8a1d85cbe1edeffa388562f0da",
-          "size": "121850",
+          "url": "https://github.com/hfrk/tetiduino/releases/download/0.0.2/tetiduino-v0.0.2.zip",
+          "archiveFileName": "tetiduino-v0.0.2.zip",
+          "checksum": "SHA-256:8e09495cee95fd423819af84cfdeadbb8cf97c50dfcf4f0b674552d6b13ab057",
+          "size": "122734",
           "boards": [
             {
               "name": "Tetiduino"
