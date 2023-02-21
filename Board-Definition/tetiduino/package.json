@@ -9,7 +9,7 @@
         {
           "name": "Tetiduino Board",
           "architecture": "avr",
-          "version": "0.0.1",
+          "version": "0.0.2",
           "category": "Contributed",
           "url": "https://github.com/hfrk/tetiduino/releases/download/0.0.2/tetiduino-v0.0.2.zip",
           "archiveFileName": "tetiduino-v0.0.2.zip",
