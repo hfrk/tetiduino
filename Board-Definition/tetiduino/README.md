@@ -1,0 +1,3 @@
+# Tetiduino Boards
+
+This repository contains the source code and configuration files of the Tetiduino Boards, yet another Arduino UNO clone...
