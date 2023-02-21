@@ -34,7 +34,7 @@
               "name": "avrdude",
               "version": "6.3.0-arduino17"
             }
-          ],
+          ]
         }
       ],
       "tools": [],
