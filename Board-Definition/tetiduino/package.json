@@ -11,10 +11,10 @@
           "architecture": "avr",
           "version": "0.0.1",
           "category": "Contributed",
-          "url": "http://downloads.arduino.cc/cores/staging/avr-1.8.5.tar.bz2",
-          "archiveFileName": "avr-1.8.5.tar.bz2",
-          "checksum": "SHA-256:ca22143a3f5d32c4b693211d99aedce358e2e0a2ab90a58c05d3afc1b56436a4",
-          "size": "7160121",
+          "url": "https://github.com/hfrk/tetiduino/releases/download/0.0.1/tetiduino-v0.0.1.zip",
+          "archiveFileName": "tetiduino-v0.0.1.zip",
+          "checksum": "SHA-256:82b218dd7abf48021c4417ebf0ad4d8781cc4b8a1d85cbe1edeffa388562f0da",
+          "size": "121850",
           "boards": [
             {
               "name": "Tetiduino"
