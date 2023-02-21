@@ -1,2 +1,5 @@
 # Arduino AVR development tools
 tools
+
+# Zipped releases
+*.zip
