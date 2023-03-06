@@ -1,0 +1,9 @@
+
+empty_atmega328.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00800100  00800100  00000054  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         00000000  00007c00  00007c00  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE

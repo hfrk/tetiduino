@@ -16,7 +16,7 @@
 # etc...
 
 # program name should not be changed...
-PROGRAM    = tetiboot
+PROGRAM    = empty
 
 # The default behavior is to build using tools that are in the users
 # current path variables, but we can also build using an installed
@@ -76,7 +76,7 @@ GCCROOT = $(TOOLROOT)/avr/bin/
 AVRDUDE_CONF = -C$(TOOLROOT)/avr/etc/avrdude.conf
 
 else
-TOOLROOT = ../tools
+TOOLROOT = ../../tools
 GCCROOT = $(TOOLROOT)/avr/bin/
 AVRDUDE_CONF = -C$(TOOLROOT)/avr/etc/avrdude.conf
 endif
@@ -219,9 +219,9 @@ diecimila_isp: isp
 
 atmega328: TARGET = atmega328
 atmega328: MCU_TARGET = atmega328p
-atmega328: CFLAGS += '-DLED_START_FLASHES=30' '-DBAUD_RATE=115200'
+atmega328: CFLAGS += '-DLED_START_FLASHES=0' '-DBAUD_RATE=115200'
 atmega328: AVR_FREQ = 16000000L
-atmega328: LDSECTIONS  = -Wl,--section-start=.text=0x7e00 -Wl,--section-start=.version=0x7ffe
+atmega328: LDSECTIONS  = -Wl,--section-start=.text=0x7c00 -Wl,--section-start=.version=0x7ffe
 atmega328: $(PROGRAM)_atmega328.hex
 atmega328: $(PROGRAM)_atmega328.lst
 
@@ -449,3 +449,6 @@ clean:
 
 %.bin: %.elf
 	$(OBJCOPY) -j .text -j .data -j .version --set-section-flags .version=alloc,load -O binary $< $@
+
+VERSION = --version
+version: $(CC)
