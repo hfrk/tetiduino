@@ -9,12 +9,12 @@
         {
           "name": "Tetiduino Board",
           "architecture": "avr",
-          "version": "0.0.2",
+          "version": "0.0.3",
           "category": "Contributed",
-          "url": "https://github.com/hfrk/tetiduino/releases/download/0.0.2/tetiduino-v0.0.2.zip",
-          "archiveFileName": "tetiduino-v0.0.2.zip",
-          "checksum": "SHA-256:8e09495cee95fd423819af84cfdeadbb8cf97c50dfcf4f0b674552d6b13ab057",
-          "size": "122734",
+          "url": "https://github.com/hfrk/tetiduino/releases/download/0.0.3/tetiduino-v0.0.3.zip",
+          "archiveFileName": "tetiduino-v0.0.3.zip",
+          "checksum": "SHA-256:bb7bdc232484a74a228be81ff86d0a3fddaf7cd882310090b84261de96207e78",
+          "size": "233008",
           "boards": [
             {
               "name": "Tetiduino"
