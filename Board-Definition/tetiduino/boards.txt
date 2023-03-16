@@ -1,6 +1,6 @@
 # See: https://arduino.github.io/arduino-cli/latest/platform-specification/
 
-menu.cpu=Processor
+menu.bootloader=Bootloader
 
 ##############################################################
 
@@ -22,36 +22,36 @@ tetiduino.build.core=arduino
 tetiduino.build.variant=standard
 
 ## Optiboot v8.3
-tetiduino.menu.cpu.optiboot=ATmega328P w/ latest optiboot
-tetiduino.menu.cpu.optiboot.upload.maximum_size=32256
-tetiduino.menu.cpu.optiboot.upload.maximum_data_size=2048
-tetiduino.menu.cpu.optiboot.upload.speed=115200
+tetiduino.menu.bootloader.optiboot=Optiboot v8.3
+tetiduino.menu.bootloader.optiboot.upload.maximum_size=32256
+tetiduino.menu.bootloader.optiboot.upload.maximum_data_size=2048
+tetiduino.menu.bootloader.optiboot.upload.speed=115200
 
-tetiduino.menu.cpu.optiboot.bootloader.low_fuses=0xFF
-tetiduino.menu.cpu.optiboot.bootloader.high_fuses=0xDE
-tetiduino.menu.cpu.optiboot.bootloader.extended_fuses=0xFD
-tetiduino.menu.cpu.optiboot.bootloader.file=optiboot/optiboot_atmega328.hex
+tetiduino.menu.bootloader.optiboot.bootloader.low_fuses=0xFF
+tetiduino.menu.bootloader.optiboot.bootloader.high_fuses=0xDE
+tetiduino.menu.bootloader.optiboot.bootloader.extended_fuses=0xFD
+tetiduino.menu.bootloader.optiboot.bootloader.file=optiboot/optiboot_atmega328.hex
 
 ## Tetiboot
-tetiduino.menu.cpu.tetiboot=ATmega328P w/ DIY bootloader
-tetiduino.menu.cpu.tetiboot.upload.maximum_size=32256
-tetiduino.menu.cpu.tetiboot.upload.maximum_data_size=2048
-tetiduino.menu.cpu.tetiboot.upload.speed=115200
+tetiduino.menu.bootloader.tetiboot=DIY bootloader
+tetiduino.menu.bootloader.tetiboot.upload.maximum_size=32256
+tetiduino.menu.bootloader.tetiboot.upload.maximum_data_size=2048
+tetiduino.menu.bootloader.tetiboot.upload.speed=115200
 
-tetiduino.menu.cpu.tetiboot.bootloader.low_fuses=0xFF
-tetiduino.menu.cpu.tetiboot.bootloader.high_fuses=0xDE
-tetiduino.menu.cpu.tetiboot.bootloader.extended_fuses=0xFD
-tetiduino.menu.cpu.tetiboot.bootloader.file=tetiboot/tetiboot_atmega328.hex
+tetiduino.menu.bootloader.tetiboot.bootloader.low_fuses=0xFF
+tetiduino.menu.bootloader.tetiboot.bootloader.high_fuses=0xDE
+tetiduino.menu.bootloader.tetiboot.bootloader.extended_fuses=0xFD
+tetiduino.menu.bootloader.tetiboot.bootloader.file=tetiboot/tetiboot_atmega328.hex
 
 ## No bootloader
-tetiduino.menu.cpu.noboot=ATmega328P w/ no bootloader
-tetiduino.menu.cpu.noboot.upload.maximum_size=32256
-tetiduino.menu.cpu.noboot.upload.maximum_data_size=2048
-tetiduino.menu.cpu.noboot.upload.speed=115200
+tetiduino.menu.bootloader.noboot=No bootloader
+tetiduino.menu.bootloader.noboot.upload.maximum_size=32256
+tetiduino.menu.bootloader.noboot.upload.maximum_data_size=2048
+tetiduino.menu.bootloader.noboot.upload.speed=115200
 
-tetiduino.menu.cpu.noboot.bootloader.low_fuses=0xFF
-tetiduino.menu.cpu.noboot.bootloader.high_fuses=0xDE
-tetiduino.menu.cpu.noboot.bootloader.extended_fuses=0xFD
-tetiduino.menu.cpu.noboot.bootloader.file=empty/empty_atmega328.hex
+tetiduino.menu.bootloader.noboot.bootloader.low_fuses=0xFF
+tetiduino.menu.bootloader.noboot.bootloader.high_fuses=0xDE
+tetiduino.menu.bootloader.noboot.bootloader.extended_fuses=0xFD
+tetiduino.menu.bootloader.noboot.bootloader.file=empty/empty_atmega328.hex
 
 ##############################################################
