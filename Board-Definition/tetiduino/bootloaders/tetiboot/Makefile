@@ -4,30 +4,15 @@
 # Instructions
 #
 # To make bootloader .hex file:
-# make diecimila
-# make lilypad
-# make ng
+# make atmega328
 # etc...
 #
 # To burn bootloader .hex file:
-# make diecimila_isp
-# make lilypad_isp
-# make ng_isp
-# etc...
+# make atmega328_isp
+
 
 # program name should not be changed...
 PROGRAM    = tetiboot
-
-# The default behavior is to build using tools that are in the users
-# current path variables, but we can also build using an installed
-# Arduino user IDE setup, or the Arduino source tree.
-# Uncomment this next lines to build within the arduino environment,
-# using the arduino-included avrgcc toolset (mac and pc)
-# ENV ?= arduino
-# ENV ?= arduinodev
-# OS ?= macosx
-# OS ?= windows
-ENV ?= tetiduinodev
 
 # enter the parameters for the avrdude isp tool
 ISPTOOL	   = arduino
@@ -38,27 +23,11 @@ MCU_TARGET = atmega328p
 LDSECTIONS  = -Wl,--section-start=.text=0x7c00 -Wl,--section-start=.version=0x7ffe
 
 # Build environments
-# Start of some ugly makefile-isms to allow optiboot to be built
-# in several different environments.  See the README.TXT file for
-# details.
 
-# default
-fixpath = $(1)
-
-ifeq ($(ENV), arduino)
-# For Arduino, we assume that we're connected to the optiboot directory
-# included with the arduino distribution, which means that the full set
-# of avr-tools are "right up there" in standard places.
-TOOLROOT = ../../../tools
-GCCROOT = $(TOOLROOT)/avr/bin/
-AVRDUDE_CONF = -C$(TOOLROOT)/avr/etc/avrdude.conf
-
-else
 TOOLROOT = ../../tools
 GCCROOT = $(TOOLROOT)/avr/bin/
 AVRDUDE_CONF = -C$(TOOLROOT)/avr/etc/avrdude.conf
-endif
-#
+
 # End of build environment code.
 
 
@@ -83,9 +52,6 @@ ISPFLASH    = $(GCCROOT)avrdude $(AVRDUDE_CONF) -c $(ISPTOOL) \
 OBJ        = $(PROGRAM).o
 OPTIMIZE = -Os -fno-inline-small-functions -fno-split-wide-types -mshort-calls
 
-DEFS       = 
-LIBS       =
-
 CC         = $(GCCROOT)avr-gcc
 
 # Override is only needed by avr-lib build system.
@@ -94,16 +60,15 @@ override CFLAGS        = -g -Wall $(OPTIMIZE) -mmcu=$(MCU_TARGET) -DF_CPU=$(AVR_
 override LDFLAGS       = $(LDSECTIONS) -Wl,--relax -Wl,--gc-sections -nostartfiles -nostdlib
 
 OBJCOPY        = $(GCCROOT)avr-objcopy
-OBJDUMP        = $(call fixpath,$(GCCROOT)avr-objdump)
+OBJDUMP        = $(GCCROOT)avr-objdump
 
 SIZE           = $(GCCROOT)avr-size
-
-test: 
 
 atmega328: TARGET = atmega328
 atmega328: MCU_TARGET = atmega328p
 atmega328: CFLAGS += '-DLED_START_FLASHES=3' '-DBAUD_RATE=115200'
-atmega328: AVR_FREQ = 16000000L
+atmega328: AVR_FREQ = 20000000L
+#atmega328: AVR_FREQ = 16000000L
 atmega328: LDSECTIONS  = -Wl,--section-start=.text=0x7e00 -Wl,--section-start=.version=0x7ffe
 atmega328: $(PROGRAM)_atmega328.hex
 atmega328: $(PROGRAM)_atmega328.lst
@@ -116,7 +81,9 @@ atmega328_isp: MCU_TARGET = atmega328p
 atmega328_isp: HFUSE = DE
 #atmega328_isp: set_hfuse
 # Low power xtal (16MHz) 16KCK/14CK+65ms
-atmega328_isp: LFUSE = FF
+#atmega328_isp: LFUSE = FF
+# Full swing xtal (20MHz) 16KCK/14CK+65ms
+atmega328_isp: LFUSE = F7
 # 2.7V brownout
 atmega328_isp: EFUSE = FD
 atmega328_isp: isp
@@ -149,6 +116,9 @@ test:
 		else echo bar; \
 	fi;
 
+all: atmega328_isp
+	$(MAKE) all ISPPORT=${ISPPORT} -C blink
+
 #
 # Generic build instructions
 #
@@ -160,7 +130,8 @@ isp: $(TARGET)
 
 %.size: %.elf
 	$(SIZE) $<
-	$(eval BYTES:=$(shell $(SIZE) $< -A | grep -Po '(?<=\.text)\s+\K([0-9]+)'))
+	$(eval BYTES:=$(shell $(SIZE) $< -A \
+		| grep -Po '(?<=\.text)\s+\K([0-9]+)'))
 	echo $(BYTES) > $@
 
 %.elf: $(OBJ)
@@ -170,10 +141,14 @@ isp: $(TARGET)
 	$(OBJDUMP) -h -S $< > $@
 
 %.hex: %.elf %.size
-	$(OBJCOPY) -j .text -j .data -j .version --set-section-flags .version=alloc,load -O ihex $< $@
+	$(OBJCOPY) -j .text -j .data -j .version \
+	--set-section-flags .version=alloc,load \
+	-O ihex $< $@
 
 %.bin: %.elf
-	$(OBJCOPY) -j .text -j .data -j .version --set-section-flags .version=alloc,load -O binary $< $@
+	$(OBJCOPY) -j .text -j .data -j .version \
+	--set-section-flags .version=alloc,load \
+	-O binary $< $@
 
 clean:
 	rm -rf *.o *.elf *.lst *.map *.sym *.lss *.eep *.srec *.bin *.hex *.size
