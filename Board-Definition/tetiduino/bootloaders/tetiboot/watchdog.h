@@ -1,6 +1,10 @@
 #include <inttypes.h>
 #include <avr/io.h>
 
+/* Function declaration */
+static inline void setWatchdog(uint8_t timeout);
+static inline void resetWatchdog();
+
 /* Watchdog settings */
 #define WD_OFF    (0)
 #define WD_16MS   (_BV(WDE))
@@ -15,6 +19,7 @@
 #define WD_8S     (_BV(WDP3) | _BV(WDP0) | _BV(WDE))
 
 static inline void setWatchdog(uint8_t timeout) {
+    resetWatchdog();
     WDTCSR = _BV(WDCE) | _BV(WDE);
     WDTCSR = timeout;
 }
