@@ -13,12 +13,9 @@ void ignoreCommand(uint8_t);
 
 #include "spmlpm.h"
 
-//uint8_t buff[128];
-#define buff ((uint8_t*)(0x100))
-
 int main() {
     uint8_t ch;
-    register uint16_t address;
+    register uint16_t address = 0;
     register uint8_t bytelength;
     
     asm volatile ("clr __zero_reg__");
@@ -31,14 +28,15 @@ int main() {
 
     if (ch & _BV(EXTRF)) {
         // external reset, start bootloader
-        flashLED(2, PINB2);
+        // flashLED(2, PINB2);
 
         // set up UART comm at 115200 baud
-        UCSR0A = _BV(U2X0); //Double speed mode USART0
+        UCSR0A = _BV(U2X0); // Double speed mode USART0
         UCSR0B = _BV(RXEN0) | _BV(TXEN0);
         UCSR0C = _BV(UCSZ00) | _BV(UCSZ01);
         UBRR0L = (uint8_t)( (F_CPU + BAUD_RATE * 4L) / (BAUD_RATE * 8L) - 1);
 
+        // Infinite loop to read STK500 commands
         for (;;) {
             /* get character from UART */
             ch = getch();
@@ -74,9 +72,9 @@ int main() {
                 waitForEOP();
             }
             else if(ch == STK_PROG_PAGE) {
-                uint8_t* sram;
                 uint8_t bytelength, wordlength;
                 uint16_t word;
+                uint8_t word_low, word_high;
                 uint16_t addr = address;
 
                 getch();
@@ -84,33 +82,20 @@ int main() {
                 wordlength = bytelength / 2;
                 getch();
 
-                sram = buff;
                 do {
-                    *sram = getch();
-                    sram++;
-                } while (--bytelength);
-
-                waitForEOP();
-
-                sram = buff;
-                do {
-                    word = (*sram);
-                    sram++;
-                    word |= (*sram) << 8;
-                    sram++;
+                    word_low = getch();
+                    word_high = getch();
+                    word = (word_high << 8) | word_low;
                     spm_fill_buffer(addr, word);
                     addr += 2;
                 } while (--wordlength);
+                waitForEOP();
+
                 spm_erase(address);
                 while(SPMCSR & _BV(SPMEN));
                 spm_write(address);
                 while(SPMCSR & _BV(SPMEN));
                 spm_rww_reenable();
-                // //buff = (uint8_t*) 0x100; // RAM start
-                // for(uint8_t i = 0; i < 128; i++) {
-                //     buff[i] = getch();
-                //     //*buff++ = getch();
-                // }
             }
             else if(ch == STK_READ_PAGE) {
                 getch();
@@ -119,11 +104,6 @@ int main() {
                 waitForEOP();
 
                 read_page(address, bytelength);
-                // //buff = (uint8_t*) 0x100; // RAM start
-                // for(uint8_t i = 0; i < 128; i++) {
-                //     putch(buff[i]);
-                //     //putch(*buff++);
-                // } 
             }
             else if (ch == STK_LEAVE_PROGMODE) {
                 waitForEOP();
@@ -142,7 +122,7 @@ int main() {
     }
     else {
         // other reset source, jump directly to app
-        flashLED(2, PINB3);
+        // flashLED(2, PINB3);
         jumpToApp();
     }
 }
